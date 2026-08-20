@@ -31,11 +31,18 @@ jobs:
           pip install --upgrade pip
           pip install "cython<3.0" buildozer
 
-      - name: Link System Android SDK
+      - name: Link Android SDK Structure
         run: |
-          mkdir -p ~/.buildozer/android/platform
           rm -rf ~/.buildozer/android/platform/android-sdk
-          ln -s /usr/local/lib/android/sdk ~/.buildozer/android/platform/android-sdk
+          mkdir -p ~/.buildozer/android/platform/android-sdk
+          cd ~/.buildozer/android/platform/android-sdk
+          ln -snf /usr/local/lib/android/sdk/build-tools build-tools
+          ln -snf /usr/local/lib/android/sdk/platforms platforms
+          ln -snf /usr/local/lib/android/sdk/platform-tools platform-tools
+          ln -snf /usr/local/lib/android/sdk/cmdline-tools cmdline-tools
+          ln -snf /usr/local/lib/android/sdk/licenses licenses
+          mkdir -p tools/bin
+          ln -snf /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager tools/bin/sdkmanager
 
       - name: Build APK with Buildozer
         run: |
