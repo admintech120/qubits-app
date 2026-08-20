@@ -24,18 +24,12 @@ jobs:
           pip install --upgrade pip
           pip install "cython<3.0" buildozer
 
-      - name: Pre-accept Android SDK Licenses
+      - name: Build APK with Buildozer
+        env:
+          BUILDOZER_ACCEPT_SDK_LICENSE: 1
         run: |
           mkdir -p ~/.buildozer/android/platform/android-sdk/licenses
-          mkdir -p ~/.android
-          touch ~/.android/repositories.cfg
           printf "89330d3220593d30a6e935012a241b39c8187514\nd56f5185613500f18d00d72301dd9299c7716326\n24333f8a6371724430e8c8f001b3303d8b5f36e8" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
-          printf "8454b8728a7935a05edc2b125435e71841291282" > ~/.buildozer/android/platform/android-sdk/licenses/android-googletv-license
-          printf "33b6a2b64607f11b759f320ef9dff4ae5c47d97a" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-preview-license
-          yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --licenses || true
-
-      - name: Build APK with Buildozer
-        run: |
           buildozer -v android debug
 
       - name: Upload APK Artifact
