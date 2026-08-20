@@ -18,3 +18,4 @@ archs = arm64-v8a
 api = 33
 minapi = 21
 accept_sdk_license = True
+ndk = 25b
