@@ -31,6 +31,18 @@ jobs:
           pip install --upgrade pip
           pip install "cython<3.0" buildozer
 
+      - name: Setup Android SDK Tools Manually
+        run: |
+          mkdir -p ~/.buildozer/android/platform/android-sdk/tools/bin
+          mkdir -p ~/.buildozer/android/platform/cmdline-tools
+          cd ~/.buildozer/android/platform/cmdline-tools
+          wget https://dl.google.com/android/repository/commandlinetools-linux-9441913_latest.zip -O cmdline-tools.zip
+          unzip -q cmdline-tools.zip
+          rm cmdline-tools.zip
+          mv cmdline-tools latest
+          # Create symlink for Buildozer legacy sdkmanager path
+          ln -s ~/.buildozer/android/platform/cmdline-tools/latest/bin/sdkmanager ~/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager
+
       - name: Build APK with Buildozer
         run: |
           buildozer -v android debug
