@@ -15,6 +15,7 @@ warn_on_root = 1
 
 [android]
 archs = arm64-v8a
-api = 31
+api = 33
 minapi = 21
+build_tools_version = 33.0.2
 accept_sdk_license = True
