@@ -17,4 +17,6 @@ warn_on_root = 1
 archs = arm64-v8a
 api = 31
 minapi = 21
+sdk_build_tools_version = 30.0.3
+accept_sdk_license = True
 ndk = 25b
