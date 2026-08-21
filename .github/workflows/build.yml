@@ -2,27 +2,32 @@ name: Build Android APK
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    container:
-      image: kivy/buildozer:latest
+    runs-on: ubuntu-20.04
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v3
 
-      - name: Build APK with Buildozer
-        env:
-          BUILDOZER_WARN_ON_ROOT: 0
-        run: |
-          yes | buildozer -v android debug
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
 
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: qubits-app-apk
-          path: bin/*.apk
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential libffi-dev python3-dev
+        pip install --upgrade buildozer cython==0.29.33
+
+    - name: Build with Buildozer
+      run: buildozer -v android debug
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: package-apk
+        path: bin/*.apk
