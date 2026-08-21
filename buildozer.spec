@@ -6,7 +6,6 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,atlas
 version = 0.1
 
-# Added android and pyjnius here
 requirements = python3,kivy,android,pyjnius
 
 orientation = portrait
@@ -17,7 +16,6 @@ log_level = 2
 warn_on_root = 1
 
 [android]
-# Added internet permissions
 android.permissions = INTERNET,ACCESS_NETWORK_STATE
 
 archs = arm64-v8a
